@@ -9,6 +9,7 @@ buildscript {
 }
 plugins {
     id "com.github.hierynomus.license" version "0.13.1"
+    id 'net.researchgate.release' version '2.4.0'
 }
 apply plugin: 'aversion-apt'
 apply plugin: 'aversion-maven'
@@ -65,3 +66,4 @@ license {
         java = 'SLASHSTAR_STYLE'
     }
 }
+afterReleaseBuild.dependsOn(uploadArchives)
