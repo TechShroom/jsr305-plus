@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'com.techshroom', name: 'Aversion', version: '2.0.1'
+    }
+}
+plugins {
+    id "com.github.hierynomus.license" version "0.13.1"
+}
+apply plugin: 'aversion-apt'
+apply plugin: 'aversion-maven'
+apply plugin: 'aversion-util'
+apply plugin: 'idea'
+
+util {
+    javaVersion = '1.8'
+}
+idea.project.languageLevel = util.javaVersion
+
+mavencfg {
+    description 'Common JSR 305 Custom Annotations'
+    coords 'TechShroom', 'jsr305-plus'
+}
+
+configurations.all {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+}
+
+javadoc {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+configure([compileJava, compileTestJava]) {
+    options.compilerArgs += ['-Xlint:all', '-Xlint:-path']
+    options.deprecation = true
+    options.encoding = 'UTF-8'
+    options.incremental = true
+    options.fork = true
+}
+
+license {
+    ext {
+        name = project.name
+        organization = project.organization
+        url = project.url
+    }
+    header = rootProject.file('HEADER.txt')
+    ignoreFailures = false
+    strictCheck = true
+    include '**/*.java'
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+    }
+}
