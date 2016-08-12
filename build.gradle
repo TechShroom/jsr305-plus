@@ -66,4 +66,3 @@ license {
         java = 'SLASHSTAR_STYLE'
     }
 }
-afterReleaseBuild.dependsOn(uploadArchives)
